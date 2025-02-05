@@ -2,7 +2,7 @@
 - Using Amazon Review Data Analysis 
 
 ## Overview
-This project implements large-scale data processing of Amazon Review dataset using Apache Spark and MongoDB. The implementation provides two approaches:
+This project implements large-scale data processing of the Amazon Review dataset using Apache Spark and MongoDB. We decided to implement this locally to optimize it and save time due to storage constraints on other tools like Databricks, google colab etc. The implementation provides two approaches:
 - MongoDB pipeline: Data loaded to MongoDB first, then processed via PySpark
 - Direct JSON processing: Data processed directly from JSON files using PySpark
 
@@ -66,6 +66,14 @@ python fetch_mongo.py
 ```python
 python readingjson.py
 ```
+## JSON schema
+- ![Image Description](./logs/jsonschema.jpg)
+  
+## Output Statistics
+
+- Total records: 233,057,327
+- Null records: 72,665
+- ![Image Description](./logs/final_log.jpg)
 
 ## Known Issues and Solutions
 
@@ -110,6 +118,9 @@ mongod --dbpath /path/to/data
 spark.conf.set("spark.driver.memory", "4g")
 spark.conf.set("spark.executor.memory", "4g")
 ```
+## Bonus 
+- Explicitly define the schema instead of relying on dynamic inference.
+ ![Image Description](./logs/bonus.jpg)
 
 ## Contributors
 - Zaib Un Nisa 21i-0383
