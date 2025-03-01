@@ -1,0 +1,44 @@
+2025-03-01 23:57:26,177 - INFO - Starting Amazon Reviews EDA
+2025-03-01 23:57:26,178 - INFO -  Loading a small data sample for EDA using Python gzip and native JSON parsing...
+2025-03-01 23:57:26,178 - INFO - File found! Size: 35974228440 bytes
+2025-03-01 23:57:26,182 - INFO - Parsed 100 valid JSON records from the gzip file.
+2025-03-01 23:57:26,184 - INFO - Found columns: ['reviewText', 'summary', 'asin', 'overall', 'reviewTime', 'verified', 'reviewerID']
+2025-03-01 23:57:26,185 - INFO - DataFrame shape: (20, 7)
+2025-03-01 23:57:26,186 - INFO -  Data successfully loaded for EDA.
+2025-03-01 23:57:26,186 - INFO -  Performing data understanding and summary statistics...
+2025-03-01 23:57:26,186 - INFO - Dataset shape: 20 rows x 7 columns
+2025-03-01 23:57:26,186 - INFO - Column types:
+2025-03-01 23:57:26,186 - INFO -   - reviewText: object
+2025-03-01 23:57:26,187 - INFO -   - summary: object
+2025-03-01 23:57:26,187 - INFO -   - asin: object
+2025-03-01 23:57:26,187 - INFO -   - overall: float64
+2025-03-01 23:57:26,187 - INFO -   - reviewTime: object
+2025-03-01 23:57:26,187 - INFO -   - verified: bool
+2025-03-01 23:57:26,188 - INFO -   - reviewerID: object
+2025-03-01 23:57:26,193 - INFO - Missing values analysis saved to E:/dataviz/eda_output/missing_values.csv
+2025-03-01 23:57:26,198 - INFO - Numeric statistics saved to E:/dataviz/eda_output/numeric_stats.csv
+2025-03-01 23:57:26,900 - INFO - Rating distribution visualization saved to E:/dataviz/visualizations/rating_distribution.html
+2025-03-01 23:57:26,900 - INFO -  Data understanding and summary statistics completed
+2025-03-01 23:57:26,901 - INFO - Performing query-based EDA...
+2025-03-01 23:57:26,901 - INFO - Query 1: Finding most reviewed products...
+2025-03-01 23:57:26,989 - INFO - Most reviewed products saved and visualized
+2025-03-01 23:57:26,990 - INFO - Query 3: Analyzing correlation between review length and rating...
+2025-03-01 23:57:27,166 - INFO - Review length analysis saved and visualized
+2025-03-01 23:57:27,166 - INFO - Query 4: Comparing verified vs non-verified purchase ratings...
+2025-03-01 23:57:27,260 - INFO - Verified vs non-verified purchase analysis saved and visualized
+2025-03-01 23:57:27,260 - INFO - Query 5: Analyzing negative keywords in reviews...
+2025-03-01 23:57:27,794 - INFO - Negative reviews word cloud saved
+2025-03-01 23:57:27,794 - INFO - Negative keywords analysis saved and visualized
+2025-03-01 23:57:27,794 - INFO - \u2705 Query-based EDA completed
+2025-03-01 23:57:27,794 - INFO - \U0001f4dd Performing text analysis...
+2025-03-01 23:57:27,794 - INFO - Generating word cloud...
+2025-03-01 23:57:28,333 - INFO - Word cloud saved to E:/dataviz/visualizations/wordcloud.png
+2025-03-01 23:57:28,333 - INFO - Performing sentiment analysis...
+2025-03-01 23:57:28,583 - INFO - Sentiment analysis saved and visualized
+2025-03-01 23:57:28,584 - INFO - Text analysis completed
+2025-03-01 23:57:28,585 - INFO - Analyzing correlations and business insights...
+2025-03-01 23:57:28,799 - INFO - Correlation heatmap saved
+2025-03-01 23:57:28,800 - INFO - Generating business insights...
+2025-03-01 23:57:28,897 - INFO - Product insights saved and visualized
+2025-03-01 23:57:29,076 - INFO - Correlation and business insights completed
+2025-03-01 23:57:29,076 - INFO - EDA process completed successfully!
