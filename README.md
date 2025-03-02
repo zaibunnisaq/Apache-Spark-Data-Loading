@@ -166,33 +166,6 @@ spark.conf.set("spark.executor.memory", "4g")
 - Compared ratings between verified and non-verified purchases.
 - Examined differences in review content and sentiment based on verification status.
 
-## Generated Queries and Insights
-### Query 1: Most Reviewed Products
-- Identified products with the highest number of reviews.
-- Visualized product popularity using bar charts.
-- Analyzed what makes certain products receive more reviews.
-
-### Query 2: Review Length vs. Rating
-- Examined the correlation between review length and rating score.
-- Calculated average review length by rating category.
-- Visualized the relationship using scatter plots and bar charts.
-
-### Query 3: Verified vs. Non-verified Purchases
-- Compared average ratings between verified and non-verified purchases.
-- Analyzed the distribution of verification status across the dataset.
-- Visualized differences using comparative bar charts.
-
-### Query 4: Negative Keywords Analysis
-- Identified reviews containing predefined negative keywords.
-- Calculated the percentage of reviews with negative sentiment.
-- Visualized the distribution using pie charts.
-- Generated word clouds for negative reviews to identify common issues.
-
-### Query 5: Correlation Analysis
-- Created a correlation matrix for numeric variables.
-- Examined relationships between review length, rating, and other metrics.
-- Visualized correlations using heatmaps.
-
 ## Visualizations
 ### Distribution Visualizations
 - Rating distribution bar chart showing the frequency of each rating score.
