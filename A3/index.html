@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 Interactive Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Interactive Data Dashboard</h1>
+        <div class="file-upload-container">
+            <label for="file-upload" class="custom-file-upload">
+                Upload JSON Data
+            </label>
+            <input type="file" id="file-upload" accept=".json">
+            <span id="file-name">No file selected</span>
+        </div>
+    </header>
+
+    <div id="dimension-selector" class="hidden">
+        <h2>Select Dimensions for Visualization</h2>
+        <div class="dimension-options">
+            <div class="dimension-group">
+                <h3>Radial Bar Chart</h3>
+                <div class="selector">
+                    <label for="radial-category">Category:</label>
+                    <select id="radial-category"></select>
+                </div>
+                <div class="selector">
+                    <label for="radial-value">Value:</label>
+                    <select id="radial-value"></select>
+                </div>
+            </div>
+
+            <div class="dimension-group">
+                <h3>Chord Diagram</h3>
+                <div class="selector">
+                    <label for="chord-category">Entities:</label>
+                    <select id="chord-category"></select>
+                </div>
+                <div class="selector">
+                    <label for="chord-connections">Connections:</label>
+                    <select id="chord-connections"></select>
+                </div>
+            </div>
+
+            <div class="dimension-group">
+                <h3>Force-Directed Graph</h3>
+                <div class="selector">
+                    <label for="force-nodes">Nodes:</label>
+                    <select id="force-nodes"></select>
+                </div>
+                <div class="selector">
+                    <label for="force-links">Links:</label>
+                    <select id="force-links"></select>
+                </div>
+                <div class="selector">
+                    <label for="force-strength">Strength Value:</label>
+                    <select id="force-strength"></select>
+                </div>
+            </div>
+
+            <div class="dimension-group">
+                <h3>Sunburst Chart</h3>
+                <div class="selector">
+                    <label for="sunburst-hierarchy">Hierarchy Levels:</label>
+                    <div id="sunburst-hierarchy-container">
+                        <select class="sunburst-level" data-level="1"></select>
+                        <button id="add-hierarchy-level">+ Add Level</button>
+                    </div>
+                </div>
+                <div class="selector">
+                    <label for="sunburst-value">Size Value:</label>
+                    <select id="sunburst-value"></select>
+                </div>
+            </div>
+        </div>
+        <button id="generate-dashboard" class="action-button">Generate Dashboard</button>
+    </div>
+
+    <main id="dashboard" class="hidden">
+        <div class="chart-container" id="radial-container">
+            <h2>Radial Bar Chart</h2>
+            <div class="chart" id="radial-chart"></div>
+        </div>
+        <div class="chart-container" id="chord-container">
+            <h2>Chord Diagram</h2>
+            <div class="chart" id="chord-chart"></div>
+        </div>
+        <div class="chart-container" id="force-container">
+            <h2>Force-Directed Graph</h2>
+            <div class="chart" id="force-chart"></div>
+        </div>
+        <div class="chart-container" id="sunburst-container">
+            <h2>Sunburst Chart</h2>
+            <div class="chart" id="sunburst-chart"></div>
+        </div>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script src="js/radial_bar.js"></script>
+    <script src="js/chord.js"></script>
+    <script src="js/force_directed.js"></script>
+    <script src="js/sunburst.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
