@@ -30,7 +30,8 @@ An interactive dashboard featuring multiple linked visualizations powered by D3.
    - Click elements to filter/select across charts
    - Drag nodes in force-directed graph
    - Click sunburst segments to drill down
-
+## Prompts Link
+https://chatgpt.com/share/6829d7cf-8554-8003-8aea-14070e93d93d
 ## Data Format Requirements
 
 Sample JSON structure:
