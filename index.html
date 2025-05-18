@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 Interactive Dashboard</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4cc9f0;
+            --secondary: #7209b7;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--gray-100);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        h1 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+        
+        h2 {
+            font-size: 1.4rem;
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        h3 {
+            font-size: 1.1rem;
+            color: var(--gray-700);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .file-upload-container {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .custom-file-upload {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+        }
+        
+        .custom-file-upload:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        #file-name {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        #dimension-selector {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        
+        .dimension-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dimension-group {
+            background-color: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .selector {
+            margin-bottom: 1rem;
+        }
+        
+        .selector label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        
+        select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            background-color: white;
+            color: var(--gray-700);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.6rem center;
+            background-size: 1rem;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+        
+        #sunburst-hierarchy-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        button {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        #add-hierarchy-level {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        #add-hierarchy-level:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .action-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: block;
+            margin-left: auto;
+            box-shadow: 0 2px 4px rgba(67, 97, 238, 0.3);
+        }
+        
+        .action-button:hover {
+            background-color: #3a56d4;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.4);
+        }
+        
+        #dashboard {
+            max-width: 1400px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1.5rem;
+            padding: 0 1.5rem;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+            height: 400px;
+        }
+        
+        .chart-container:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .chart {
+            width: 100%;
+            height: calc(100% - 3rem);
+            overflow: hidden;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 0.75rem;
+            background-color: rgba(33, 37, 41, 0.85);
+            color: white;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 0.85rem;
+            max-width: 250px;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Responsive layout */
+        @media (max-width: 900px) {
+            #dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .dimension-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Interactive elements */
+        path, circle, rect {
+            transition: opacity 0.2s, fill 0.2s;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .loading:after {
+            content: " ";
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 6px solid var(--primary);
+            border-color: var(--primary) transparent var(--primary) transparent;
+            animation: loading 1.2s linear infinite;
+        }
+        
+        @keyframes loading {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Interactive Data Dashboard</h1>
+        <div class="file-upload-container">
+            <label for="file-upload" class="custom-file-upload">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: -3px;">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload JSON Data
+            </label>
+            <input type="file" id="file-upload" accept=".json">
+            <span id="file-name">No file selected</span>
+        </div>
+    </header>
+
+    <div id="dimension-selector" class="hidden">
+        <h2>Select Dimensions for Visualization</h2>
+        <div class="dimension-options">
+            <div class="dimension-group">
+                <h3>Radial Bar Chart</h3>
+                <div class="selector">
+                    <label for="radial-category">Category:</label>
+                    <select id="radial-category"></select>
+                </div>
+                <div class="selector">
+                    <label for="radial-value">Value:</label>
+                    <select id="radial-value"></select>
+                </div>
+            </div>
+
+            <div class="dimension-group">
+                <h3>Chord Diagram</h3>
+                <div class="selector">
+                    <label for="chord-category">Entities:</label>
+                    <select id="chord-category"></select>
+                </div>
+                <div class="selector">
+                    <label for="chord-connections">Connections:</label>
+                    <select id="chord-connections"></select>
+                </div>
+            </div>
+
+            <div class="dimension-group">
+                <h3>Force-Directed Graph</h3>
+                <div class="selector">
+                    <label for="force-nodes">Nodes:</label>
+                    <select id="force-nodes"></select>
+                </div>
+                <div class="selector">
+                    <label for="force-links">Links:</label>
+                    <select id="force-links"></select>
+                </div>
+                <div class="selector">
+                    <label for="force-strength">Strength Value:</label>
+                    <select id="force-strength"></select>
+                </div>
+            </div>
+
+            <div class="dimension-group">
+                <h3>Sunburst Chart</h3>
+                <div class="selector">
+                    <label for="sunburst-hierarchy">Hierarchy Levels:</label>
+                    <div id="sunburst-hierarchy-container">
+                        <select class="sunburst-level" data-level="1"></select>
+                        <button id="add-hierarchy-level">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: -2px;">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add Level
+                        </button>
+                    </div>
+                </div>
+                <div class="selector">
+                    <label for="sunburst-value">Size Value:</label>
+                    <select id="sunburst-value"></select>
+                </div>
+            </div>
+        </div>
+        <button id="generate-dashboard" class="action-button">
+            Generate Dashboard
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px; vertical-align: -3px;">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <main id="dashboard" class="hidden">
+        <div class="chart-container" id="radial-container">
+            <h2>Radial Bar Chart</h2>
+            <div class="chart" id="radial-chart"></div>
+        </div>
+        <div class="chart-container" id="chord-container">
+            <h2>Chord Diagram</h2>
+            <div class="chart" id="chord-chart"></div>
+        </div>
+        <div class="chart-container" id="force-container">
+            <h2>Force-Directed Graph</h2>
+            <div class="chart" id="force-chart"></div>
+        </div>
+        <div class="chart-container" id="sunburst-container">
+            <h2>Sunburst Chart</h2>
+            <div class="chart" id="sunburst-chart"></div>
+        </div>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script src="js/radial_bar.js"></script>
+    <script src="js/chord.js"></script>
+    <script src="js/force_directed.js"></script>
+    <script src="js/sunburst.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
