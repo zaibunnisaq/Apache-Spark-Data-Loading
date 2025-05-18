@@ -1,0 +1,13 @@
+1. "how to start d3 basics"
+2. "how to process datasets in d3"
+3. "radial graphs d3, how to"
+4. "shpuld i run html and that would connect to d3"
+5. "Select a JSON file that contains structured data grouped by region, sector, or category."
+6. "Hover over bars to see exact values for each company or artist."
+7. "my nodes are too big, what logic could I use to shorten them for the force directed graph"
+8. "my sunburst is showing a few categories as well as my radial, what logic could I use to make them better and more visible"
+9. "my code works for one dataset and not the other, how do I make it work for more than one dataset"
+10. "Generate all the prompts I used while doing this assignment and compile them"
+
+
+https://chatgpt.com/share/6829d7cf-8554-8003-8aea-14070e93d93d
